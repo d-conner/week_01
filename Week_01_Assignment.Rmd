@@ -11,8 +11,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1.  Explain coercion rules. Create an example that demonstrates the fixed order of the coercion rules.
 
+Coercion rules govern the hierarchy of data type interchangability. Specifically, data types may be represented by any "lower" level of the of the heirarchy but none "higher".
+hierarchy: logical -> integers -> doubles -> characters
 ```{r}
-
+as.integer(TRUE)
+as.character(TRUE)
+as.character(1)
+as.double(1)
+as.double("TRUE")
 ```
 
 2.  The following code will generate a warning. Explain why.
@@ -20,41 +26,72 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 as.integer(c("one", "two", "three"))
 ```
+The input, while human-readable as numbers, is read by R as text / characters. While numbers (integers or doubles) can be treated as characters in the coercion rules hierarchy, characters cannot be promoted to numbers. 
+
 
 3.  Create a vector of a sequence of integers starting at 2, ending at 100, and increasing by 2. Assign the vector to an object called `evens`. Coerce the vector to be of type `integer`. Confirm that the vector is of type `integer`.
 
 ```{r}
+evens <-
+  as.integer(
+  seq(from = 2, to = 100, by = 2)
+  )
 
+evens                           #display vector
+
+typeof(evens)                   #display data type
 ```
 
 4.  Create a vector of random numbers with a length equal to your vector in exercise 3. Use a seed with a value of 730 before creating your vector. Assign the vector to an object called `randoms`. Confirm the type of the vector.
 
 ```{r}
 
+set.seed(730)
+randoms <- runif(n = 50, min = 0, max = 1)
+
+randoms                           #display vector
+typeof(randoms)                   #display data type
 ```
 
 5.  Create a vector demonstrating which values in exercise 3 are greater than `0.75`. Assign the vector to an object called `logicals`. Confirm the type of the vector.
 
 ```{r}
+logicals <- evens > 0.75
 
+logicals                           #display vector
+typeof(logicals)                   #display data type
+  
 ```
 
 6.  Create a data frame including the three vectors created in exercises 3 through 5. Assign it to an object following best practices for naming.
 
 ```{r}
-
+vector_combo_df <-
+  data.frame(evens, randoms, logicals)
 ```
 
 7.  Create a new object which is the sum of `evens` and `randoms` all divided by 3. Demonstrate how to calculate basic summary statistics for this new object (mean, median, minimum, maximum, standard deviation, variance).
 
 ```{r}
+sums_div_3 <-
+  (evens + randoms) / 3
 
+sums_div_3                           #display vector
+
+mean(sums_div_3)
+median(sums_div_3)
+min(sums_div_3)
+max(sums_div_3)
+sd(sums_div_3)
+var(sums_div_3)
 ```
 
 8.  We discussed the idea that R is a "vectorized" language. Explain this concept. Why is it important?
 
+R works on data vectors, alone or arranged in matrices/data frames. This means data are arranged in sequence like in the columns of a spreadsheet, usually one data type per "column" vector. Vectors of the same length (or lists, if not all same data type) may be arranged together into matrices (same data type) or data frames (not same data type). This ensures data are orderly and permits operations on data sets, not only simple calculator operations.
+
 9.  Run the `sessionInfo` function in a chunk.
 
 ```{r}
-
+sessionInfo
 ```
