@@ -1,5 +1,6 @@
 ---
 title: "Week 01 Assignment"
+author: "D Conner"
 output: html_document
 ---
 
